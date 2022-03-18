@@ -26,10 +26,11 @@
 //Instanzen der Bibliotheken
 Adafruit_ILI9341 tft = Adafruit_ILI9341(TFT_CS, TFT_DC, TFT_RST);
 static
-//XPT2046_Touchscreen touch(TOUCH_CS);
-md_touch          touch(TOUCH_CS);
-static md_touch  *pTouch = &touch;
-md_TouchEvent     tevent(pTouch);
+XPT2046_Touchscreen  touch(TOUCH_CS);
+XPT2046_Touchscreen *ptouch = &touch;
+//md_touch          touch(TOUCH_CS);
+//static md_touch  *pTouch = &touch;
+md_TouchEvent     tevent(ptouch);
 md_spiffs         conf = md_spiffs();
 static md_spiffs *pConf = &conf;
 
@@ -131,7 +132,7 @@ void setup()
     tft.fillScreen(BACKGROUND);
     //Touchscreen vorbereiten
     Serial.println(" .. touch");
-    touch.init(&tft, TOUCH_ROTATION);
+    touch.begin();
     touch.setRotation(TOUCH_ROTATION);
     tevent.setResolution(tft.width(),tft.height());
     tevent.setDrawMode(false);
