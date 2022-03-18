@@ -3,6 +3,9 @@
     "string": "cpp",
     "cstring": "cpp",
     "typeinfo": "cpp",
-    "ledc_struct.h": "c"
+    "ledc_struct.h": "c",
+    "adafruit_gfx.h": "c",
+    "*.tcc": "cpp",
+    "fstream": "cpp"
   }
 }
