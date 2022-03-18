@@ -129,7 +129,7 @@ void setup()
     tft.fillScreen(BACKGROUND);
     //Touchscreen vorbereiten
     Serial.println(" .. touch");
-    touch.begin();
+    touch.begin(&tft, TOUCH_ROTATION);
     touch.setRotation(TOUCH_ROTATION);
     tevent.setResolution(tft.width(),tft.height());
     tevent.setDrawMode(false);
