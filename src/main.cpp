@@ -24,16 +24,16 @@
   #endif
 
 //Instanzen der Bibliotheken
-Adafruit_ILI9341 tft = Adafruit_ILI9341(TFT_CS, TFT_DC, TFT_RST);
-static
-XPT2046_Touchscreen  touch(TOUCH_CS);
-XPT2046_Touchscreen *ptouch = &touch;
-//md_touch          touch(TOUCH_CS);
-//static md_touch  *pTouch = &touch;
-md_TouchEvent     tevent(ptouch);
-md_spiffs         conf = md_spiffs();
-static md_spiffs *pConf = &conf;
-
+  /*
+    Adafruit_ILI9341 tft = Adafruit_ILI9341(TFT_CS, TFT_DC, TFT_RST);
+    XPT2046_Touchscreen  touch(TOUCH_CS);
+    XPT2046_Touchscreen *ptouch = &touch;
+    //md_touch          touch(TOUCH_CS);
+    //static md_touch  *pTouch = &touch;
+    md_TouchEvent     tevent(ptouch);
+    md_spiffs         conf = md_spiffs();
+    static md_spiffs *pConf = &conf;
+   */
 //Farben fuer die Bloecke
 /*
   const uint16_t xposorBlock[8] =
@@ -132,48 +132,48 @@ void setup()
     tft.fillScreen(BACKGROUND);
     //Touchscreen vorbereiten
     Serial.println(" .. touch");
-    touch.begin();
-    touch.setRotation(TOUCH_ROTATION);
-    tevent.setResolution(tft.width(),tft.height());
-    tevent.setDrawMode(false);
-    //Callback Funktion registrieren
-    tevent.registerOnTouchClick(onClick);
-    //tft.fillRect(LEFTMARGIN,TOPMARGIN,xposUMNS*BLOCKSIZE,yposS*BLOCKSIZE,NOPIECE);
+    touch.start(TOUCH_ROTATION, TOUCH_CS, TFT_CS, TFT_DC, TFT_RST, TFT_LED);
+        //XPT2046_Touchscreen  touch(TOUCH_CS);
+        /*
+          touch.begin();
+          touch.setRotation(TOUCH_ROTATION);
+          tevent.setResolution(tft.width(),tft.height());
+          tevent.setDrawMode(false);
+          //Callback Funktion registrieren
+          tevent.registerOnTouchClick(onClick);
+                      //tft.fillRect(LEFTMARGIN,TOPMARGIN,xposUMNS*BLOCKSIZE,yposS*BLOCKSIZE,NOPIECE);
+         */
     Serial.println(" .. conf-flash");
     conf.init(pConf);
     Serial.println(" .. read calib");
-    if (conf.exists("/conf.dat"))
-      {
-        //FILE *f = fopen("/conf.dat","r");
-        //fscanf(f,"%d,%d,%d,%d", cxmin, cymin, cxmax, cymax);
-        //fclosescanf(f,"%d", cxmin);
-        char buf[50];
-        uint8_t res = conf.readFile("/conf.dat", 40, buf);
-        if (res == ESP_OK)
-          {
-            Serial.print(" .. Config found ");
-            Serial.println(buf);
-            int a,b,c,d;
-            sscanf(buf, "%i %i %i %i", &a, &b, &c, &d);
-            cxmin = (uint16_t) a;
-            cymin = (uint16_t) b;
-            cxmax = (uint16_t) c;
-            cymax = (uint16_t) d;
-          }
-        Serial.print("cxmin ");
-        Serial.print(cxmin); Serial.print(",");
-        Serial.print(cymin); Serial.print(",");
-        Serial.print(cxmax); Serial.print(",");
-        Serial.println(cymax);
-        tevent.calibrate(cxmin, cymin, cxmax, cymax);
-      }
+          if (conf.exists("/conf.dat"))
+            {
+                            //FILE *f = fopen("/conf.dat","r");
+                            //fscanf(f,"%d,%d,%d,%d", cxmin, cymin, cxmax, cymax);
+                            //fclosescanf(f,"%d", cxmin);
+              char buf[50];
+              uint8_t res = conf.readFile("/conf.dat", 40, buf);
+              if (res == ESP_OK)
+                {
+                  Serial.print(" .. Config found ");
+                  Serial.println(buf);
+                  int a,b,c,d;
+                  sscanf(buf, "%i %i %i %i", &a, &b, &c, &d);
+                  cxmin = (uint16_t) a;
+                  cymin = (uint16_t) b;
+                  cxmax = (uint16_t) c;
+                  cymax = (uint16_t) d;
+                }
+              Serial.print("cxmin ");
+              Serial.print(cxmin); Serial.print(",");
+              Serial.print(cymin); Serial.print(",");
+              Serial.print(cxmax); Serial.print(",");
+              Serial.println(cymax);
+              tevent.calibrate(cxmin, cymin, cxmax, cymax);
+            }
 
-    //clearBoard();
-    //newPiece();
-    //Startzeit merken und Spielfeld loeschen
     last = millis();
-    score=0;
-    tft.fillScreen(ILI9341_BLACK);
+          tft.fillScreen(ILI9341_BLACK);
     Serial.println(" .. ready");
   }
 
@@ -188,105 +188,103 @@ int16_t   calWin[4] = {110, 160, 70, 40};
 
 void loop()
   {
-    //tft.fillScreen(ILI9341_BLACK);
-    //tft.fillRect(0,0,240,20,BACKGROUND);
-    //tft.fillRect(2,2,3,3,ILI9341_RED);
-    tft.setTextSize(textSize);
-    for (uint8_t i = 0 ; i < 4 ; i++)
-      {
-        setLimits(i);
-        tft.setRotation(i);
-        xpos = 10 + 10; ypos = 10;
-        tft.drawRoundRect(10,      10, 3, 3, 1, ILI9341_YELLOW);
-        sprintf(text,"r %1i", i);
-        tft.setCursor(xpos,ypos);
-        tft.getTextBounds(&text[0], xpos, ypos, &wx, &wy, &ww, &wh);
-        tft.fillRect(wx, wy, ww, wh, ILI9341_BLACK);
-        tft.print(text);
-      }
-    delay(3000);
+                      //tft.fillScreen(ILI9341_BLACK);
+                      //tft.fillRect(0,0,240,20,BACKGROUND);
+                      //tft.fillRect(2,2,3,3,ILI9341_RED);
+          tft.setTextSize(textSize);
+          for (uint8_t i = 0 ; i < 4 ; i++)
+            {
+              setLimits(i);
+              tft.setRotation(i);
+              xpos = 10 + 10; ypos = 10;
+              tft.drawRoundRect(10,      10, 3, 3, 1, ILI9341_YELLOW);
+              sprintf(text,"r %1i", i);
+              tft.setCursor(xpos,ypos);
+              tft.getTextBounds(&text[0], xpos, ypos, &wx, &wy, &ww, &wh);
+              tft.fillRect(wx, wy, ww, wh, ILI9341_BLACK);
+              tft.print(text);
+            }
+          delay(3000);
 
-    Serial.println(calWin[0]);
-    Serial.println(calWin[1]);
-    Serial.println(calWin[2]);
-    Serial.println(calWin[3]);
-    if (doCal == true)
-      {
-        Serial.println("draw Calib window");
-        //tft.fillRoundRect(110,260,60,40,2,ILI9341_WHITE);
-        tft.fillRoundRect(calWin[0], calWin[1], calWin[2], calWin[3], 2, ILI9341_GREEN);
-        tft.drawRoundRect(calWin[0], calWin[1], calWin[2], calWin[3], 2, ILI9341_RED);
-        tft.setCursor(calWin[0] + 2, calWin[1] + 10);
-        tft.setTextSize(2);
-        tft.setTextColor(ILI9341_BLUE);
-        tft.print("Calib");
-      }
+          Serial.println(calWin[0]);
+          Serial.println(calWin[1]);
+          Serial.println(calWin[2]);
+          Serial.println(calWin[3]);
+          if (doCal == true)
+            {
+              Serial.println("draw Calib window");
+              //tft.fillRoundRect(110,260,60,40,2,ILI9341_WHITE);
+              tft.fillRoundRect(calWin[0], calWin[1], calWin[2], calWin[3], 2, ILI9341_GREEN);
+              tft.drawRoundRect(calWin[0], calWin[1], calWin[2], calWin[3], 2, ILI9341_RED);
+              tft.setCursor(calWin[0] + 2, calWin[1] + 10);
+              tft.setTextSize(2);
+              tft.setTextColor(ILI9341_BLUE);
+              tft.print("Calib");
+            }
     //get position and check if touched
     while (1)
       {
-        tch = tevent.getTouchPos(pP, ppRaw);
-        if (tch)
-          {
-            sprintf(text,"x %3i y %3i rx %5i ry %5i", p.x, p.y, pRaw.x, pRaw.y);
-            xpos = 30;
-            if ((pRaw.x < 1000) && (pRaw.y < 1000))
-              {
-                ypos = 30;
-                if (doCal == true) calP[0] = pRaw;
-              }
-            else if ((pRaw.x < 1000) && (pRaw.y > 3000))
-              {
-                ypos = 90;
-                if (doCal == true) calP[2] = pRaw;
-              }
-            else if ((pRaw.x > 3000) && (pRaw.y > 3000))
-              {
-                ypos = 120;
-                if (doCal == true) calP[3] = pRaw;
-              }
-            else if ((pRaw.x > 3000) && (pRaw.y < 1000))
-              {
-                ypos = 60;
-                if (doCal == true) calP[1] = pRaw;
-              }
-            else
-              {
-                ypos = 150;
-                if (doCal == true)
-                  {
-                    if (   (p.x > calWin[0]) && (p.x < calWin[0] + calWin[2])
-                        && (p.y > calWin[1]) && (p.y < calWin[1] + calWin[3])
-                       )
-                        cxmin = (calP[0].x + calP[2].x)/2;
-                      {
-                        cxmax = (calP[1].x + calP[3].x)/2;
-                        cymin = (calP[0].y + calP[1].y)/2;
-                        cymax = (calP[2].y + calP[3].y)/2;
-                        int16_t dRawX = cxmax - cxmin;
-                        int16_t dRawY = cymax - cymin;
-                        cxmin -= dRawX/30;
-                        cxmax += dRawX/30;
-                        cymin -= dRawY/22;
-                        cymax += dRawY/22;
-                        tevent.calibrate(cxmin, cymin, cxmax, cymax);
-                        Serial.print("Calib done");
-                        doCal = false;
-                        tft.fillRoundRect(calWin[0], calWin[1], calWin[2], calWin[3], 2, ILI9341_BLACK);
+              tch = tevent.getTouchPos(pP, ppRaw);
+              if (tch)
+                {
+                  sprintf(text,"x %3i y %3i rx %5i ry %5i", p.x, p.y, pRaw.x, pRaw.y);
+                  xpos = 30;
+                  if ((pRaw.x < 1000) && (pRaw.y < 1000))
+                    {
+                      ypos = 30;
+                      if (doCal == true) calP[0] = pRaw;
+                    }
+                  else if ((pRaw.x < 1000) && (pRaw.y > 3000))
+                    {
+                      ypos = 90;
+                      if (doCal == true) calP[2] = pRaw;
+                    }
+                  else if ((pRaw.x > 3000) && (pRaw.y > 3000))
+                    {
+                      ypos = 120;
+                      if (doCal == true) calP[3] = pRaw;
+                    }
+                  else if ((pRaw.x > 3000) && (pRaw.y < 1000))
+                    {
+                      ypos = 60;
+                      if (doCal == true) calP[1] = pRaw;
+                    }
+                  else
+                    {
+                      ypos = 150;
+                      if (doCal == true)
+                        {
+                          if (   (p.x > calWin[0]) && (p.x < calWin[0] + calWin[2])
+                              && (p.y > calWin[1]) && (p.y < calWin[1] + calWin[3])
+                             )
+                              cxmin = (calP[0].x + calP[2].x)/2;
+                            {
+                              cxmax = (calP[1].x + calP[3].x)/2;
+                              cymin = (calP[0].y + calP[1].y)/2;
+                              cymax = (calP[2].y + calP[3].y)/2;
+                              int16_t dRawX = cxmax - cxmin;
+                              int16_t dRawY = cymax - cymin;
+                              cxmin -= dRawX/30;
+                              cxmax += dRawX/30;
+                              cymin -= dRawY/22;
+                              cymax += dRawY/22;
+                              tevent.calibrate(cxmin, cymin, cxmax, cymax);
+                              Serial.print("Calib done");
+                              doCal = false;
+                              tft.fillRoundRect(calWin[0], calWin[1], calWin[2], calWin[3], 2, ILI9341_BLACK);
 
-                      }
-                  }
-              }
-            tft.setCursor(xpos,ypos);
-            tft.setTextSize(1);
-            tft.getTextBounds(&text[0], xpos, ypos, &wx, &wy, &ww, &wh);
-            tft.fillRect(wx, wy, ww, wh, ILI9341_BLACK);
-            tft.print(text);
-            delay(500);
-          }
+                            }
+                        }
+                    }
+                  tft.setCursor(xpos,ypos);
+                  tft.setTextSize(1);
+                  tft.getTextBounds(&text[0], xpos, ypos, &wx, &wy, &ww, &wh);
+                  tft.fillRect(wx, wy, ww, wh, ILI9341_BLACK);
+                  tft.print(text);
+                  delay(500);
+                }
         delay(500);
-
       }
-
 
     //tft.setTextxposor(ILI9341_GREEN);
     #ifdef XXXX
