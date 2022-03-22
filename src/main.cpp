@@ -2,17 +2,18 @@
 #include <main.h>
 #include <md_spiffs.h>
 
-//Aussehen
-  #define BACKGROUND ILI9341_GREENYELLOW //Farbe des Rahmens
-  #define TOPMARGIN 20                   //Rand oben
-  #define LEFTMARGIN 12                  //Rand links und rechts
-  #define xposUMNS 12                     //Anzahl der Spalten
-  #define yposS 16                        //Anzahl der Zeilen
-  #define BLOCKSIZE 18                   //Groesse eines Blocks in Pixel
-  #define NOPIECE ILI9341_BLACK          //Farb fuer das leere Spielfeld
-  #define ALLON ILI9341_DARKGREY         //Farbe fuer alle Bloecke ein
-  #define BORDER ILI9341_WHITE           //Farbe fuer den Blockrand
-
+  /*
+    //Aussehen
+      #define BACKGROUND ILI9341_GREENYELLOW //Farbe des Rahmens
+      #define TOPMARGIN 20                   //Rand oben
+      #define LEFTMARGIN 12                  //Rand links und rechts
+      #define xposUMNS 12                     //Anzahl der Spalten
+      #define yposS 16                        //Anzahl der Zeilen
+      #define BLOCKSIZE 18                   //Groesse eines Blocks in Pixel
+      #define NOPIECE ILI9341_BLACK          //Farb fuer das leere Spielfeld
+      #define ALLON ILI9341_DARKGREY         //Farbe fuer alle Bloecke ein
+      #define BORDER ILI9341_WHITE           //Farbe fuer den Blockrand
+   */
 //Unterschiedliche Pin-Belegung fuer ESP32 und D1Mini
 #ifdef ESP32
     #define TFT_CS   5
@@ -24,7 +25,7 @@
   #endif
 
 //Instanzen der Bibliotheken
-  md_touch  touch(TOUCH_CS, TFT_CS, TFT_DC, TFT_RST, TFT_LED);
+  md_touch  touch(TOUCH_CS, TFT_CS, TFT_DC, TFT_RST, TFT_LED, LED_ON);
   /*
     XPT2046_Touchscreen  touch(TOUCH_CS);
     XPT2046_Touchscreen *ptouch = &touch;
@@ -71,52 +72,52 @@
       { 0, 0, 0, 0,  0, 0, 0, 0,  7, 7, 7, 0,  0, 7, 0, 0 },
       { 0, 0, 0, 0,  0, 7, 0, 0,  0, 7, 7, 0,  0, 7, 0, 0 }
     };
-*/
-/* Speicherplatz fuer das Spielfeld
-   0 bedeutet Block frei >0 Index der Farbe des belegten Blocks
-  */
-uint8_t playGround[yposS][xposUMNS];
 
-//Globale variablen
-uint8_t curPiece;  //aktuelles Tetris Teil
-int8_t curxpos;     //aktuelle Spalte
-int8_t curypos;     //aktuelle Zeile
-uint32_t score;    //aktueller Score
-uint8_t level;     //aktueller Level
-uint16_t interval; //aktuelles Zeitintervall f�r die Abw�rtsbewegung
-uint32_t last;     //letzter Zeitstempel
+  Speicherplatz fuer das Spielfeld
+    0 bedeutet Block frei >0 Index der Farbe des belegten Blocks
 
-int16_t  xpos = 1;
-int16_t  ypos = 10;
+    uint8_t playGround[yposS][xposUMNS];
 
-uint8_t  textSize = 1;
-TS_Point p;
-TS_Point *pP = &p;
-boolean  tch;
-int16_t  wx, wy;
-uint16_t ww, wh;
-char     text[30];
-uint8_t  rot;
-int16_t  xmax, ymax;
+  //Globale variablen
+  uint8_t curPiece;  //aktuelles Tetris Teil
+  int8_t curxpos;     //aktuelle Spalte
+  int8_t curypos;     //aktuelle Zeile
+  uint32_t score;    //aktueller Score
+  uint8_t level;     //aktueller Level
+  uint16_t interval; //aktuelles Zeitintervall f�r die Abw�rtsbewegung
+  uint32_t last;     //letzter Zeitstempel
 
-uint16_t cxmin = 0;
-uint16_t cxmax = 0;
-uint16_t cymin = 0;
-uint16_t cymax = 0;
+  int16_t  xpos = 1;
+  int16_t  ypos = 10;
 
+  uint8_t  textSize = 1;
+  TS_Point p;
+  TS_Point *pP = &p;
+  boolean  tch;
+  int16_t  wx, wy;
+  uint16_t ww, wh;
+  char     text[30];
+  uint8_t  rot;
+  int16_t  xmax, ymax;
 
-void setLimits(uint8_t inRot = rot)
-  {
-    uint8_t i = inRot % 4;
-    switch (i)
-      {
-        case 0: xmax = 240; ymax = 320; break;
-        case 1: xmax = 320; ymax = 240; break;
-        case 2: xmax = 240; ymax = 320; break;
-        case 3:
-        default: xmax = 320; ymax = 240; break;
-      }
-  }
+  uint16_t cxmin = 0;
+  uint16_t cxmax = 0;
+  uint16_t cymin = 0;
+  uint16_t cymax = 0;
+
+  void setLimits(uint8_t inRot = rot)
+    {
+      uint8_t i = inRot % 4;
+      switch (i)
+        {
+          case 0: xmax = 240; ymax = 320; break;
+          case 1: xmax = 320; ymax = 240; break;
+          case 2: xmax = 240; ymax = 320; break;
+          case 3:
+          default: xmax = 320; ymax = 240; break;
+        }
+    }
+ */
 
 // ----------------------------------------
 void setup()
