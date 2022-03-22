@@ -44,12 +44,11 @@
     ILI9341_CYAN,  ILI9341_GREEN,  ILI9341_PURPLE,
     ILI9341_BLUE,  ILI9341_ORANGE
   };
-*/
+ */
 /* Bitmuster fuer die Teile
    0 = Block nicht gesetzt >0 Index der Farbe f�r den Block
   */
-/*
-  const uint8_t piece[20][16] =
+/*const uint8_t piece[20][16] =
     {
       { 0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0 },
       { 0, 0, 0, 0,  0, 0, 0, 0,  1, 1, 0, 0,  1, 1, 0, 0 },
