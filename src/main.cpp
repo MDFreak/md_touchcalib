@@ -24,10 +24,10 @@
   #endif
 
 //Instanzen der Bibliotheken
-  /*
-    Adafruit_ILI9341 tft = Adafruit_ILI9341(TFT_CS, TFT_DC, TFT_RST);
     XPT2046_Touchscreen  touch(TOUCH_CS);
     XPT2046_Touchscreen *ptouch = &touch;
+  /*
+    Adafruit_ILI9341 tft = Adafruit_ILI9341(TFT_CS, TFT_DC, TFT_RST);
     //md_touch          touch(TOUCH_CS);
     //static md_touch  *pTouch = &touch;
     md_TouchEvent     tevent(ptouch);
