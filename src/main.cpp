@@ -288,48 +288,54 @@ void loop()
         delay(500);
       }
 
-    //tft.setTextxposor(ILI9341_GREEN);
-    #ifdef XXXX
-          tft.setCursor(myxpos, myypos);
-          char buf[50];
-          sprintf(buf,"xpos: %2i ypos: %2i",myxpos,myypos);
-          tft.print(buf);
-          delay (1000);
-          myypos += 20;
-          if (++myTextSize > 6)
-            {
-              myTextSize = 1;
-              myypos += 20;
-              tft.fillScreen(ILI9341_BLACK);
-            }
-      //Auf Touch Ereignisse pruefen
-      tevent.pollTouchScreen();
-      /* Immer wenn die Zeit intterval erreicht ist, wird das aktuelle Tetris-Teil
-         um eine Zeile nach unten geschoben falls das moeglich ist.
-         Kommt es dabei zu einer Kollision oder wird der untere Rand erreicht,
-         so wird das Teil nicht verschoben sondern am Spielfeld verankert.
-         Vollstaendige Zeilen werden entfernt und ein neues Teil am oberen
-         Rand eingefuegt
-       */
-      if ((curPiece > 0) && ((millis()-last) > interval))
-        {
-          last = millis();
-          if (checkPiece(curPiece,curxpos,curypos+1))
-            {
-              hidePiece(curPiece,curxpos,curypos);
-              curypos++;
-              showPiece(curPiece,curxpos,curypos);
-            }
-            else
-            {
-              putPiece(curPiece,curxpos,curypos);
-              removeComplete();
-              newPiece();
-            }
-        }
+    /* Callbackfunktion fuer Touchscreen Ereignis Klick
+       Diese Funktion wird immer dann aufgerufen, wenn der Bildschirm
+       kurz beruehrt wird. p gibt die Position des Beruehrungspunktes an
+     */
+    void onClick(TS_Point p)
 
-      #endif
-  }
+        //tft.setTextxposor(ILI9341_GREEN);
+        #ifdef XXXX
+              tft.setCursor(myxpos, myypos);
+              char buf[50];
+              sprintf(buf,"xpos: %2i ypos: %2i",myxpos,myypos);
+              tft.print(buf);
+              delay (1000);
+              myypos += 20;
+              if (++myTextSize > 6)
+                {
+                  myTextSize = 1;
+                  myypos += 20;
+                  tft.fillScreen(ILI9341_BLACK);
+                }
+          //Auf Touch Ereignisse pruefen
+          tevent.pollTouchScreen();
+          /* Immer wenn die Zeit intterval erreicht ist, wird das aktuelle Tetris-Teil
+             um eine Zeile nach unten geschoben falls das moeglich ist.
+             Kommt es dabei zu einer Kollision oder wird der untere Rand erreicht,
+             so wird das Teil nicht verschoben sondern am Spielfeld verankert.
+             Vollstaendige Zeilen werden entfernt und ein neues Teil am oberen
+             Rand eingefuegt
+           */
+          if ((curPiece > 0) && ((millis()-last) > interval))
+            {
+              last = millis();
+              if (checkPiece(curPiece,curxpos,curypos+1))
+                {
+                  hidePiece(curPiece,curxpos,curypos);
+                  curypos++;
+                  showPiece(curPiece,curxpos,curypos);
+                }
+                else
+                {
+                  putPiece(curPiece,curxpos,curypos);
+                  removeComplete();
+                  newPiece();
+                }
+            }
+
+          #endif
+      }
 
 /* Funktion zeigt in der Kopfleiste den aktuellen Score und den Level an
    Abhaengig vom Score wird der Level hinaufgesetzt und das Intervall verringert
@@ -616,11 +622,7 @@ void newGame()
     newPiece();
   }
 
-/* Callbackfunktion fuer Touchscreen Ereignis Klick
-   Diese Funktion wird immer dann aufgerufen, wenn der Bildschirm
-   kurz beruehrt wird. p gibt die Position des Beruehrungspunktes an
- */
-void onClick(TS_Point p)
+
   {
     if (p.y < 80)
       { //Klick im obersten Viertel des Displays
