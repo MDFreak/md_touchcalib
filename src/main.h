@@ -3,11 +3,11 @@
 
   #include <Arduino.h>
   #include <wire.h>
-  #include <Adafruit_GFX.h> //Grafik Bibliothek
-  #include <Adafruit_ILI9341.h> // Display Treiber
-  #include <XPT2046_Touchscreen.h> //Touchscreen Treiber
-//  #include <md_touch.h>
-  #include <md_TouchEvent.h> //Auswertung von Touchscreen Ereignissen
+  //#include <Adafruit_GFX.h> //Grafik Bibliothek
+  //#include <Adafruit_ILI9341.h> // Display Treiber
+  //#include <XPT2046_Touchscreen.h> //Touchscreen Treiber
+  #include <md_touch.h>
+  //#include <md_TouchEvent.h> //Auswertung von Touchscreen Ereignissen
 
   //Aussehen
   #define BACKGROUND ILI9341_GREENYELLOW //Farbe des Rahmens
