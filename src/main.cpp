@@ -146,8 +146,8 @@ void setup()
                       //tft.fillRect(LEFTMARGIN,TOPMARGIN,xposUMNS*BLOCKSIZE,yposS*BLOCKSIZE,NOPIECE);
          */
 
-    last = millis();
-          tft.fillScreen(ILI9341_BLACK);
+    //last = millis();
+    //      tft.fillScreen(ILI9341_BLACK);
     Serial.println(" .. ready");
   }
 
