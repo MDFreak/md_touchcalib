@@ -24,7 +24,7 @@
   #endif
 
 //Instanzen der Bibliotheken
-  md_touch  touch(TOUCH_CS, TFT_CS, TFT_DC, TFT_RST);
+  md_touch  touch(TOUCH_CS, TFT_CS, TFT_DC, TFT_RST, TFT_LED);
   /*
     XPT2046_Touchscreen  touch(TOUCH_CS);
     XPT2046_Touchscreen *ptouch = &touch;
@@ -127,13 +127,13 @@ void setup()
     pinMode(TFT_LED,OUTPUT);
     digitalWrite(TFT_LED, LED_ON);
     //Display initialisieren
-    Serial.println(" .. tft");
-    tft.begin();
-    tft.setRotation(TOUCH_ROTATION);
-    tft.fillScreen(BACKGROUND);
+        //Serial.println(" .. tft");
+        //tft.begin();
+        //tft.setRotation(TOUCH_ROTATION);
+        //tft.fillScreen(BACKGROUND);
     //Touchscreen vorbereiten
     Serial.println(" .. touch");
-    touch.start(TOUCH_ROTATION, TOUCH_CS, TFT_CS, TFT_DC, TFT_RST, TFT_LED);
+    touch.start(TOUCH_ROTATION);
         //XPT2046_Touchscreen  touch(TOUCH_CS);
         /*
           touch.begin();
