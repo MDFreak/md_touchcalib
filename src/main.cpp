@@ -337,6 +337,7 @@ void loop()
           #endif
       }
 
+#ifdef GAME_ACTIVE
 /* Funktion zeigt in der Kopfleiste den aktuellen Score und den Level an
    Abhaengig vom Score wird der Level hinaufgesetzt und das Intervall verringert
   */
@@ -500,7 +501,7 @@ void deleteypos(int8_t ypos)
   {
     tft.fillRect(LEFTMARGIN,TOPMARGIN+ypos*BLOCKSIZE,xposUMNS * BLOCKSIZE,BLOCKSIZE,NOPIECE);
     for (uint8_t i =0; i<xposUMNS; i++) playGround[ypos][i]=0;
-  }
+   }
 
 /* Funktion kopiert die Zeile srcypos in die Zeile dstypos
    Die Anzeige der Zielzeile wird vorher geloescht. Beim
@@ -622,39 +623,5 @@ void newGame()
     newPiece();
   }
 
-
-  {
-    if (p.y < 80)
-      { //Klick im obersten Viertel des Displays
-        newGame();
-      }
-      else if (p.y > 240)
-      { //Klick im untersten Viertel
-        uint8_t pc = curPiece;
-        int8_t c = curxpos;
-        if (p.x < 80)
-          { //Klick im linken Drittel -> nach links schieben
-            c--;
-          }
-          else if (p.x <160)
-          { //Klick im mittleren Drittel -> drehen
-            pc = rotate(pc);
-          }
-          else
-          { //Klick im rechten Drittel -> nach rechts schieben
-            c++;
-          }
-        /* nach Aenderung der Position wird auf Kollision geprueft
-           nur wenn keine Kollision auftritt, wird die Bewegung
-           ausgefuehrt
-         */
-        if (checkPiece(pc,c,curypos))
-          {
-            hidePiece(curPiece,curxpos,curypos);
-            curPiece = pc;
-            curxpos = c;
-            showPiece(curPiece,curxpos,curypos);
-          }
-      }
-  }
+#endif
 
