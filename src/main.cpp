@@ -126,27 +126,10 @@ void setup()
     //Hintergrundbeleuchtung einschalten
     pinMode(TFT_LED,OUTPUT);
     digitalWrite(TFT_LED, LED_ON);
-    //Display initialisieren
-        //Serial.println(" .. tft");
-        //tft.begin();
-        //tft.setRotation(TOUCH_ROTATION);
-        //tft.fillScreen(BACKGROUND);
     //Touchscreen vorbereiten
     Serial.println(" .. touch");
     touch.start(TOUCH_ROTATION);
-        //XPT2046_Touchscreen  touch(TOUCH_CS);
-        /*
-          touch.begin();
-          touch.setRotation(TOUCH_ROTATION);
-          tevent.setResolution(tft.width(),tft.height());
-          tevent.setDrawMode(false);
-          //Callback Funktion registrieren
-          tevent.registerOnTouchClick(onClick);
-                      //tft.fillRect(LEFTMARGIN,TOPMARGIN,xposUMNS*BLOCKSIZE,yposS*BLOCKSIZE,NOPIECE);
-         */
 
-    //last = millis();
-    //      tft.fillScreen(ILI9341_BLACK);
     Serial.println(" .. ready");
   }
 
