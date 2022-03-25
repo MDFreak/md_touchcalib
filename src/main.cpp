@@ -144,8 +144,14 @@ int16_t   calWin[4] = {110, 160, 70, 40};
 
 void loop()
   {
-
-    usleep(500000);
+    touch.wrStatus("Statustext MD_DEF", MD_DEF);
+    sleep(1);
+    touch.wrStatus("Statustext MD_SEL", MD_SEL);
+    sleep(1);
+    touch.wrStatus("Statustext MD_RDY", MD_RDY);
+    sleep(1);
+    touch.wrStatus("Statustext MD_EME", MD_EME);
+    sleep(1);
   }
 
     /* Callbackfunktion fuer Touchscreen Ereignis Klick
