@@ -130,6 +130,8 @@ void setup()
     Serial.println(" .. touch");
     touch.start(TOUCH_ROTATION);
 
+
+
     Serial.println(" .. ready");
   }
 
